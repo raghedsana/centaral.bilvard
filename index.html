@@ -65,6 +65,19 @@
         </form>
     </div>
 
+        <!-- Din JavaScript här -->
+        <script>
+            console.log("JavaScript är laddat och körs!");
+            
+            // Lägga till en enkel interaktiv funktion
+            function changeText() {
+                document.querySelector('p').textContent = "Texten har ändrats!";
+            }
+    
+            // Lägg till en händelsehanterare
+            document.querySelector('h1').addEventListener('click', changeText);
+        </script>
+
     <!-- Länk till extern JavaScript-fil där funktionaliteten hanteras -->
     <script src="script.js"></script>
 
