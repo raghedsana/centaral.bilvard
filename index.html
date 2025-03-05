@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Länkar till en extern CSS-fil för styling -->
+    <title>Central BilVård AB - Boka nu</title> <!-- Titel på sidan som visas i webbläsarens flik -->
+</head>
+<body>
+   
+    <div class="container"> <!-- En wrapper för att centrera innehållet på sidan -->
+        <img src="imegs/Logo.png" alt="Central BilVård AB" class="logo"> <!-- Företagets logotyp -->
+        <h2>Central BilVård AB</h2> <!-- Sidans huvudrubrik -->
+
+        <div id="messageBox"></div> <!-- Ett tomt div-element där meddelanden kan visas dynamiskt -->
+
+        <!-- Bokningsformulär -->
+        <form id="bookingForm">
+            <!-- Fält för namn -->
+            <label for="firstname">Förnamn & Efternamn:</label>
+            <input type="text" id="firstname" required>
+
+            <!-- Fält för e-post -->
+            <label for="email">E-post:</label>
+            <input type="email" id="email" required>
+
+            <!-- Fält för registreringsnummer -->
+            <label for="regNumber">Regnummer:</label>
+            <input type="text" id="regNumber" required>
+
+            <!-- Fält för telefonnummer -->
+            <label for="phone">Telefonnummer:</label>
+            <input type="tel" id="phone" required>
+
+            <!-- Dropdown för att välja tjänst -->
+            <label for="service">Välj tjänst:</label>
+            <select id="service" onchange="updatePrice()">
+                <option value="">Välj en tjänst...</option>
+                <!-- Dynamiska alternativ läggs till här med JavaScript -->
+            </select>
+
+            <!-- Datum och tid för bokning -->
+            <div class="date-time-container">
+                <div>
+                    <label for="bookingDate">Datum:</label>
+                    <input type="date" id="bookingDate" required>
+                </div>
+
+                <div>
+                    <label for="bookingTime">Tid:</label>
+                    <select id="bookingTime" required>
+                        <option value="">Välj en tid...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Visning av priset för vald tjänst -->
+            <p>Pris: <span id="price">-</span> kr</p>
+
+            <!-- Bokningsknapp -->
+            <button type="submit" id="submit">Boka</button>
+
+            <!-- Knapp för att rensa formuläret -->
+            <button type="button" onclick="resetForm()">Rensa</button>
+        </form>
+    </div>
+
+    <!-- Länk till extern JavaScript-fil där funktionaliteten hanteras -->
+    <script src="script.js"></script>
+
+</body>
+</html>

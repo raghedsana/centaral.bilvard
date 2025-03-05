@@ -1,0 +1,190 @@
+.logo {
+    width: 188px;
+    height: 173px;
+    border-radius: 24%; 
+    object-fit: cover;
+    border: 4px solid #007bff; /* 🔹 Blå ram */
+    
+    /* 🔹 Animation: Flytta från vänster */
+    animation: moveLogo 1.5s ease-out forwards;
+    position: relative;
+}
+
+/* 🔹 Skapa animationen */
+@keyframes moveLogo {
+    from {
+        transform: translateX(-200px); /* Startar utanför skärmen till vänster */
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0); /* Slutar på sin plats */
+        opacity: 1;
+    }
+}
+
+
+/* Rubrik */
+h2 {
+    color: #007bff; /* Blå färg */
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Etiketter */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    color: #333;
+    font-size: 15px;
+    text-align: left;
+    padding-left: 36px;
+}
+
+/* Input och select */
+input, select {
+    width: 90%;
+    padding: 14px;
+    margin-top: 5px;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #f8f9fa;
+}
+
+/* Pris-styling */
+p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+/* Knapp-styling */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+/* Boka-knapp */
+button[type="submit"] {
+    background: #64a4e8;
+    color: white;
+}
+
+/* Rensa-knapp */
+button[type="button"] {
+    background: #e6616e;
+    color: white;
+}
+
+/* Hover-effekt */
+button:hover {
+    opacity: 0.8;
+}
+
+/* Anpassning för mobil */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-size: cover;  /* Standardstorlek för alla bilder */
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 90px; /* Minskat padding */
+}
+
+
+
+/* 🔹 Mindre rubrik */
+h2 {
+    font-size: 18px;
+}
+
+/* 🔹 Mindre etiketter */
+label {
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+/* 🔹 Justerade input och knappar */
+input, select {
+    width: 100%;
+    padding: 8px;
+    font-size: 12px;
+}
+
+/* 🔹 Mindre knappar */
+button {
+    padding: 8px;
+    font-size: 12px;
+}
+
+/* 🔹 Anpassning för små skärmar */
+/* Anpassning för små skärmar */
+@media (max-width: 250px) {
+    .container {
+        max-width: 150px;
+        max-height: 450px; /* ✅ Mindre höjd på mobil */
+        padding: 450px 15px 15px;
+    
+
+    .logo {
+        width: 140px;
+        height: 120px;
+        top: -40px;
+    }
+}
+    h2 {
+        font-size: 16px;
+    }
+
+  
+
+    button {
+        font-size: 11px;
+    }
+}
+
+.container {
+    width: 90%; /* Begränsar bredden till 90% av föräldraelementet */
+    max-width: 380px; /* Maxbredd för container */
+    max-height: 675px; /* Justera maxhöjden för att göra den kortare */
+    background: rgba(255, 255, 255, 0.9); /* Lätt genomskinlig vit bakgrund */
+    padding: 60px; /* För att hålla innehållet inom containern */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden; /* Förhindrar att innehållet sträcker sig utanför */
+}
+
+/* 🔹 Mindre logotyp */
+.logo {
+    width: 120px;
+    height: 110px;
+    border-radius: 20%;
+    border: 3px solid #007bff;
+    animation: moveLogo 1.5s ease-out forwards;
+}
