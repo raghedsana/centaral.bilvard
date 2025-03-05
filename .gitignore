@@ -1,2 +1,4 @@
 .env
 node_modules
+# Lägg till denna rad i din .gitignore
+.env
