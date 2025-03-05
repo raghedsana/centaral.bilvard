@@ -1,8 +1,8 @@
 
 
 
-require('dotenv').config(); // Lägg till denna rad högst upp
-const azureToken = process.env.AZURE_TOKEN;
+// require('dotenv').config(); // Lägg till denna rad högst upp
+// const azureToken = process.env.AZURE_TOKEN;
 
 
 // Funktion för att hämta autentiseringstoken
