@@ -1,15 +1,15 @@
 
 
 
-// require('dotenv').config(); // Lägg till denna rad högst upp
-// const azureToken = process.env.AZURE_TOKEN;
-
 
 // Funktion för att hämta autentiseringstoken
 async function getToken() {
     try {
-        const response = await fetch('http://localhost:3000/get-token', { method: 'POST' });
+        const response = await fetch('https://din-backend-url.railway.app/get-token', { method: 'POST' });
+
         const data = await response.json();
+        
+        console.log('Token mottagen:', data.token); // Lägg till denna rad
         return data.token;
     } catch (error) {
         console.error('❌ Fel vid hämtning av token:', error);
@@ -24,7 +24,7 @@ async function loadServices() {
 
     const listId = "55799431-5d9a-4e47-af8d-fb320dadc9ac";
     const siteId = "orkarallt2022.sharepoint.com,126de03e-7fc2-4e7e-af61-ed3790083184,179e2cf6-21eb-460b-b796-6baa607ffa53";
-    console.log("🚀 loadServices() körs!");
+    
     try {
         const response = await fetch(
             `https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items?expand=fields`, 
