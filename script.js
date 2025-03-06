@@ -5,7 +5,7 @@
 // Funktion för att hämta autentiseringstoken
 async function getToken() {
     try {
-        const response = await fetch('http://localhost:3000/get-token', { method: 'POST' });
+        const response = await fetch('https://centaral-bilvard.onrender.com', { method: 'POST' });
         const data = await response.json();
         console.log('Token mottagen:', data.token); // Lägg till loggning här
         return data.token;
