@@ -73,12 +73,18 @@ const app = express();
 app.use(bodyParser.json());
 
 // CORS-konfiguration för att tillåta endast förfrågningar från en specifik URL
+const cors = require('cors');
+
+// Lägg till CORS-konfiguration för att tillåta Netlify-domänen
 const corsOptions = {
-    origin: '*', // Tillåt alla domäner för test
+    origin: 'https://centralbilvard.netlify.app', // Lägg till din Netlify URL här
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204, // För preflight-förfrågningar
 };
+
 app.use(cors(corsOptions));
 
 
@@ -102,12 +108,12 @@ app.post('/get-token', async (req, res) => {
                 grant_type: 'client_credentials',
             })
         );
-
-        console.log("Token skapad:", response.data.access_token);  // Lägg till denna logg
+        console.log("Token mottagen:", response.data.access_token);
         res.json({ token: response.data.access_token });
     } catch (error) {
-        console.error('❌ Fel vid hämtning av token:', error.response ? error.response.data : error.message);
-        res.status(500).json({ error: 'Kunde inte hämta token' });
+        console.error('Fel vid hämtning av token:', error.response ? error.response.data : error.message);
+        // Returnera ett JSON-felmeddelande om något går fel
+        res.status(500).json({ error: 'Kunde inte hämta token', details: error.message });
     }
 });
 
