@@ -73,18 +73,16 @@ const app = express();
 app.use(bodyParser.json());
 
 // CORS-konfiguration för att tillåta endast förfrågningar från en specifik URL
-const cors = require('cors');
-
-// Lägg till CORS-konfiguration för att tillåta Netlify-domänen
 const corsOptions = {
-    origin: 'https://centralbilvard.netlify.app', // Lägg till din Netlify URL här
+    origin: 'https://centralbilvard.netlify.app/', // Lägg till din Netlify URL här
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     preflightContinue: false,
-    optionsSuccessStatus: 204, // För preflight-förfrågningar
+    optionsSuccessStatus: 204,
+    // Lägg till denna rad för att tillåta åtkomst till privata nätverksresurser
+    exposedHeaders: ['Access-Control-Allow-Private-Network']
 };
-
 app.use(cors(corsOptions));
 
 
@@ -108,16 +106,19 @@ app.post('/get-token', async (req, res) => {
                 grant_type: 'client_credentials',
             })
         );
-        console.log("Token mottagen:", response.data.access_token);
+
+        // Logga token till konsolen
+        console.log("Token mottagen:", response.data.access_token);  
+
+        // Skicka tillbaka token till frontend
         res.json({ token: response.data.access_token });
     } catch (error) {
         console.error('Fel vid hämtning av token:', error.response ? error.response.data : error.message);
-        // Returnera ett JSON-felmeddelande om något går fel
-        res.status(500).json({ error: 'Kunde inte hämta token', details: error.message });
+        res.status(500).json({ error: 'Kunde inte hämta token' });
     }
 });
 
 // Kör servern på port 3000
-app.listen(3000, '0.0.0.0', () => {
-    console.log('Backend körs på http://0.0.0.0:3000');
+app.listen(3000, () => {
+    console.log('Backend körs på http://localhost:3000');
 });

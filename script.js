@@ -1,27 +1,19 @@
 
 
 
+
+// Funktion för att hämta autentiseringstoken
 async function getToken() {
     try {
-        const response = await fetch('https://centralbilvard.netlify.app//get-token', { method: 'POST' });
-
-        if (!response.ok) {
-            // Logga fel om förfrågningen inte lyckas
-            const errorText = await response.text();
-            console.error(`Fel vid förfrågan: ${errorText}`);
-            throw new Error('Fel i backend');
-        }
-
-        // Försök att parsa JSON-svaret
+        const response = await fetch('http://localhost:3000/get-token', { method: 'POST' });
         const data = await response.json();
-        console.log('Token mottagen:', data.token);
+        console.log('Token mottagen:', data.token); // Lägg till loggning här
         return data.token;
     } catch (error) {
         console.error('❌ Fel vid hämtning av token:', error);
         return null;
     }
 }
-
 
 async function loadServices() {
     const token = await getToken();

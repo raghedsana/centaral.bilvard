@@ -2,10 +2,11 @@
   "name": "bokingsapp",
   "version": "1.0.0",
   "main": "proxy.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
+ "scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
