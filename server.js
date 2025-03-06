@@ -74,17 +74,15 @@ app.use(bodyParser.json());
 
 // CORS-konfiguration för att tillåta endast förfrågningar från en specifik URL
 const corsOptions = {
-    origin: 'https://centralbilvard.netlify.app/', // Lägg till din Netlify URL här
+    origin: 'https://centralbilvard.netlify.app/', // Se till att Netlify URL är korrekt här
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
-    // Lägg till denna rad för att tillåta åtkomst till privata nätverksresurser
     exposedHeaders: ['Access-Control-Allow-Private-Network']
 };
 app.use(cors(corsOptions));
-
 
 // Ditt Azure AD Client ID, Tenant ID och Client Secret
 const clientId = 'c2ee67a5-df65-40ba-8788-f7609fec6ac4'; // Ersätt med ditt Client ID från Azure
