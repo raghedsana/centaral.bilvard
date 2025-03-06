@@ -5,11 +5,10 @@
 // Funktion för att hämta autentiseringstoken
 async function getToken() {
     try {
-        const response = await fetch('https://din-backend-url.railway.app/get-token', { method: 'POST' });
+        const response = await fetch('https://centralbilvard.netlify.app//get-token', { method: 'POST' });
 
         const data = await response.json();
-        
-        console.log('Token mottagen:', data.token); // Lägg till denna rad
+        console.log('Token mottagen:', data.token); // Lägg till loggning här
         return data.token;
     } catch (error) {
         console.error('❌ Fel vid hämtning av token:', error);
