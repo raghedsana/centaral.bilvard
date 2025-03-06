@@ -105,7 +105,7 @@ body {
     background-size: cover;  /* Standardstorlek för alla bilder */
     background-position: center;
     background-repeat: no-repeat;
-    transition: background-image 1s ease-in-out;
+    transition: background-image 2s ease-in-out;
     color: #333;
     display: flex;
     justify-content: center;
@@ -188,3 +188,7 @@ button {
     border: 3px solid #007bff;
     animation: moveLogo 1.5s ease-out forwards;
 }
+
+
+
+

@@ -19,11 +19,12 @@ async function getToken() {
 
 async function loadServices() {
     const token = await getToken();
+    
     if (!token) return console.error("❌ Kunde inte hämta autentiseringstoken!");
 
     const listId = "55799431-5d9a-4e47-af8d-fb320dadc9ac";
     const siteId = "orkarallt2022.sharepoint.com,126de03e-7fc2-4e7e-af61-ed3790083184,179e2cf6-21eb-460b-b796-6baa607ffa53";
-
+    console.log("🚀 loadServices() körs!");
     try {
         const response = await fetch(
             `https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items?expand=fields`, 
@@ -415,6 +416,16 @@ setInterval(changeBackground, 3000);
 
 // Kör direkt så att första bilden syns vid start
 changeBackground();
+
+
+
+
+
+
+
+
+
+
 
 
 function resetForm() {
