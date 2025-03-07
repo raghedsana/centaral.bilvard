@@ -5,9 +5,16 @@
 // Funktion för att hämta autentiseringstoken
 async function getToken() {
     try {
-        const response = await fetch('https://centaral-bilvard.onrender.com', { method: 'POST' });
+        const response = await fetch('https://centaral-bilvard.onrender.com/get-token', {
+            method: 'POST',
+            mode: 'cors', // Lägg till detta
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
         const data = await response.json();
-        console.log('Token mottagen:', data.token); // Lägg till loggning här
+        console.log('Token mottagen:', data.token);
         return data.token;
     } catch (error) {
         console.error('❌ Fel vid hämtning av token:', error);
@@ -18,27 +25,34 @@ async function getToken() {
 async function loadServices() {
     const token = await getToken();
     
-    if (!token) return console.error("❌ Kunde inte hämta autentiseringstoken!");
+    if (!token) {
+        console.error("❌ Kunde inte hämta autentiseringstoken!");
+        return;
+    }
 
     const listId = "55799431-5d9a-4e47-af8d-fb320dadc9ac";
     const siteId = "orkarallt2022.sharepoint.com,126de03e-7fc2-4e7e-af61-ed3790083184,179e2cf6-21eb-460b-b796-6baa607ffa53";
     
     try {
-        const response = await fetch(
-            `https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items?expand=fields`, 
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const url = `https://graph.microsoft.com/v1.0/sites/${siteId}/lists/${listId}/items?expand=fields`;
+        console.log(`Fetching from: ${url}`);
+        
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
 
-        if (!response.ok) throw new Error(await response.text());
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Error response:", errorText);
+            throw new Error(errorText);
+        }
 
         const data = await response.json();
-       
+        console.log("Data received:", data);
 
         const serviceDropdown = document.getElementById("service");
         if (!serviceDropdown) {
@@ -71,6 +85,7 @@ async function loadServices() {
         console.error("❌ Fel vid hämtning av tjänster:", error);
     }
 }
+
 
 // Funktion för att uppdatera pris när en tjänst väljs
 function updatePrice() {

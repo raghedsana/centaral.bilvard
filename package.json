@@ -2,25 +2,52 @@
   "name": "bokingsapp",
   "version": "1.0.0",
   "main": "proxy.js",
- "scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build"
-},
-
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "assert": "^2.1.0",
     "axios": "^1.7.9",
     "body-parser": "^1.20.3",
+    "browserify-fs": "^1.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.11.0",
-    "node-fetch": "^3.3.2"
+    "net-browserify": "^0.2.4",
+    "node-fetch": "^3.3.2",
+    "path-browserify": "^1.0.1",
+    "querystring-es3": "^0.2.1",
+    "react-scripts": "^5.0.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "react-app-rewired": "^2.2.1"
   },
-  "description": ""
+  "description": "",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -74,13 +74,13 @@ app.use(bodyParser.json());
 
 // CORS-konfiguration för att tillåta endast förfrågningar från en specifik URL
 const corsOptions = {
-    origin: 'https://centralbilvard.netlify.app/', // Se till att Netlify URL är korrekt här
-    methods: ['GET', 'POST'],
+    origin: [
+        'https://centralbilvard.netlify.app',  // Se till att det är exakt samma URL som används i frontend
+        'http://localhost:3000'               // För lokal utveckling
+    ],
+    methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-    exposedHeaders: ['Access-Control-Allow-Private-Network']
+    credentials: true
 };
 app.use(cors(corsOptions));
 
@@ -94,6 +94,7 @@ app.options('*', cors(corsOptions));  // För att hantera preflight-förfrågnin
 
 // Ditt vanliga POST-endpoint
 app.post('/get-token', async (req, res) => {
+    console.log('Received a POST request on /get-token');
     try {
         const response = await axios.post(
             `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
@@ -114,6 +115,11 @@ app.post('/get-token', async (req, res) => {
         res.status(500).json({ error: 'Kunde inte hämta token' });
     }
 });
+
+app.get('/', (req, res) => {
+    res.send('Server is working!');
+});
+
 
 // Kör servern på port 3000
 app.listen(3000, () => {
