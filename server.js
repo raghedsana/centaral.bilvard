@@ -1,114 +1,40 @@
 
-// // Importera nödvändiga bibliotek
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const axios = require('axios');
-// const cors = require('cors');
 
-// // Skapa Express app
-// const app = express();
-
-// // Middleware
-// app.use(bodyParser.json());
-// app.use(cors());
-
-// // Ditt Azure AD Client ID, Tenant ID och Client Secret
-// const clientId = 'c2ee67a5-df65-40ba-8788-f7609fec6ac4'; // Ersätt med ditt Client ID från Azure
-// const tenantId = 'd8270c95-3840-4d86-b8d3-8f2988525b2a'; // Ersätt med ditt Tenant ID från Azure
-// const clientSecret = 'OdQ8Q~vv66B7zk4c3-XsIVIHfDf.qrnzGNyKua_h'; // Ersätt med ditt Client Secret från Azure
-
-// // Endpoint för att hämta token
-// app.post('/get-token', async (req, res) => {
-//     try {
-//         const response = await axios.post(
-//             `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
-//             new URLSearchParams({
-//                 client_id: clientId,
-//                 scope: 'https://graph.microsoft.com/.default',
-//                 client_secret: clientSecret,
-//                 grant_type: 'client_credentials',
-//             })
-//         );
-
-//         // 🔴 LÄGG TILL DENNA RAD FÖR ATT SE TOKEN I KONSOLET 🔴
-//         console.log("Token mottagen:", response.data.access_token);  
-
-//         // Skicka tillbaka token till frontend
-//         res.json({ token: response.data.access_token });
-//     } catch (error) {
-//         console.error('Fel vid hämtning av token:', error.response ? error.response.data : error.message);
-//         res.status(500).json({ error: 'Kunde inte hämta token' });
-//     }
-// });
-
-
-
-
-
-
-// // Kör servern på port 3000
-// app.listen(3000, () => {
-//     console.log('Backend körs på http://localhost:3000');
-// });
-
-
-
-
-
-
-
-
-
-
-// Importera nödvändiga bibliotek
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const cors = require('cors');
+const path = require('path');
+require('dotenv').config();
 
-// Skapa Express app
 const app = express();
+const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(bodyParser.json());
-
-// CORS-konfiguration för att tillåta endast förfrågningar från en specifik URL
-const corsOptions = {
-    origin: [
-        'https://centralbilvard.netlify.app',  // Se till att det är exakt samma URL som används i frontend
-        'http://localhost:3000'               // För lokal utveckling
-    ],
-    methods: ['GET', 'POST', 'OPTIONS'],
+app.use(cors({
+    origin: '*',  // Tillåt alla domäner (För produktion, specificera en domän här)
+    methods: ['GET', 'POST'], 
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-};
-app.use(cors(corsOptions));
+}));
 
-// Ditt Azure AD Client ID, Tenant ID och Client Secret
-const clientId = 'c2ee67a5-df65-40ba-8788-f7609fec6ac4'; // Ersätt med ditt Client ID från Azure
-const tenantId = 'd8270c95-3840-4d86-b8d3-8f2988525b2a'; // Ersätt med ditt Tenant ID från Azure
-const clientSecret = 'OdQ8Q~vv66B7zk4c3-XsIVIHfDf.qrnzGNyKua_h'; // Ersätt med ditt Client Secret från Azure
+// Serva statiska filer från 'front-end'-mappen (inklusive bilder i 'imegs' mappen)
+app.use(express.static(path.join(__dirname, 'front-end'))); // Serva statiska filer från front-end
 
-// Endpoint för att hämta token
-app.options('*', cors(corsOptions));  // För att hantera preflight-förfrågningar
-
-// Ditt vanliga POST-endpoint
+// Token-endpoint för att hämta autentiseringstoken
 app.post('/get-token', async (req, res) => {
-    console.log('Received a POST request on /get-token');
     try {
         const response = await axios.post(
-            `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+            `https://login.microsoftonline.com/${process.env.TENANT_ID}/oauth2/v2.0/token`,
             new URLSearchParams({
-                client_id: clientId,
+                client_id: process.env.CLIENT_ID,
                 scope: 'https://graph.microsoft.com/.default',
-                client_secret: clientSecret,
+                client_secret: process.env.CLIENT_SECRET,
                 grant_type: 'client_credentials',
             })
         );
 
-        
-
-        // Skicka tillbaka token till frontend
+        console.log("Token mottagen:", response.data.access_token);
         res.json({ token: response.data.access_token });
     } catch (error) {
         console.error('Fel vid hämtning av token:', error.response ? error.response.data : error.message);
@@ -116,12 +42,12 @@ app.post('/get-token', async (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.send('Server is working!');
+// Skicka index.html för alla GET-förfrågningar (SPA-stöd)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'front-end', 'index.html'));
 });
 
-
-// Kör servern på port 3000
-app.listen(3000, () => {
-    console.log('Backend körs på http://localhost:3000');
+// Starta servern
+app.listen(port, () => {
+    console.log(`✅ Servern körs på http://localhost:${port}`);
 });
